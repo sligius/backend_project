@@ -40,8 +40,7 @@ class Genre(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=100, verbose_name='Название',
                              help_text='Введите название книги', null=False, blank=False)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, verbose_name='Автор',
-                               help_text='Выберите автора', null=False, blank=False)
+    author = models.ManyToManyField(Author, verbose_name='Автор', help_text='Выберите автора', blank=False)
     publication_year = models.IntegerField(validators=[validate_number_length], verbose_name='Год публикации',
                                            help_text='Введите год публикации', null=False, blank=False)
     description = models.TextField(verbose_name='Описание', help_text='Добавьте описание книги',
@@ -49,7 +48,8 @@ class Book(models.Model):
     genres = models.ManyToManyField(Genre)
 
     def __str__(self):
-        return f'{self.title} ({self.author.name})'
+        author_names = ", ".join([author.name for author in self.author.all()])
+        return f'{self.title} ({author_names})'
 
     class Meta:
         db_table = 'Book'

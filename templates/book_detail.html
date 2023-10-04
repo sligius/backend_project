@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Detail</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'book_info.css' %}">
+</head>
+<body>
+    <div class="book">
+        <div class="main_info">
+            <h1>{{ book.title }}</h1>
+            <p>{% for author in book.author.all %}{{ author.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+        </div>
+        <p data-before="Год публикации:">{{ book.publication_year }}</p>
+        <p data-before="Описание:">{{ book.description }}</p>
+        <p data-before="Жанры:">{% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    </div>
+</body>
+</html>
