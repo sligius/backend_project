@@ -102,12 +102,11 @@ class Review(models.Model):
 
 class FavoriteBook(models.Model):
     reader = models.ForeignKey(Reader, on_delete=models.CASCADE, verbose_name="id читателя",
-                               help_text="Выберите id читателя", null=True, blank=True)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name="id книги",
-                             help_text="Выберите id книги", null=True, blank=True)
+                               help_text="Выберите читателя", null=True, blank=True)
+    book = models.ManyToManyField(Book, help_text="Выберите книги")
 
     def __str__(self):
-        return f'{self.reader} - {self.book}'
+        return f'Любимые книги читателя {self.reader}'
 
     class Meta:
         db_table = 'Favourite Book'
