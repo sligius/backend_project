@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django import forms
 
@@ -5,6 +6,36 @@ from django import forms
 def validate_number_length(value):
     if len(str(value)) != 4:
         raise forms.ValidationError('Год публикации должен быть четырехзначным числом')
+
+
+class Reader(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="id читателя",
+                             help_text="Выберите id читателя", null=True, blank=True)
+    first_name = models.CharField(max_length=50, verbose_name="Имя", help_text="Введите имя", null=False, blank=False)
+    last_name = models.CharField(max_length=100, verbose_name="Фамилия", help_text="Введите фамилию",
+                                 null=True, blank=True)
+    email = models.EmailField(verbose_name='Email')
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        db_table = 'Reader'
+
+
+class Critic(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='id критика',
+                             help_text="Выберите id критика", null=True, blank=True)
+    first_name = models.CharField(max_length=50, verbose_name='Имя', help_text='Введите имя', null=False, blank=False)
+    last_name = models.CharField(max_length=100, verbose_name='Фамилия', help_text='Введите фамилию',
+                                 null=True, blank=True)
+    email = models.EmailField(verbose_name='Email')
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        db_table = 'Critic'
 
 
 class Author(models.Model):
@@ -53,3 +84,30 @@ class Book(models.Model):
 
     class Meta:
         db_table = 'Book'
+
+
+class Review(models.Model):
+    critic = models.ForeignKey(Critic, on_delete=models.CASCADE, verbose_name='Критик',help_text="Выберите критика",
+                               null=False, blank=False)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name='Книга', help_text="Выберите книгу",
+                             null=False, blank=False)
+    content = models.TextField(verbose_name='Рецензия', help_text="Напишите Вашу рецензию", null=False, blank=False)
+
+    def __str__(self):
+        return f'Рецензия от критика {self.critic.user.username} на книгу "{self.book.title}"'
+
+    class Meta:
+        db_table = 'Review'
+
+
+class FavoriteBook(models.Model):
+    reader = models.ForeignKey(Reader, on_delete=models.CASCADE, verbose_name="id читателя",
+                               help_text="Выберите id читателя", null=True, blank=True)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name="id книги",
+                             help_text="Выберите id книги", null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.reader} - {self.book}'
+
+    class Meta:
+        db_table = 'Favourite Book'
