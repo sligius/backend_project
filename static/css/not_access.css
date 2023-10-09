@@ -1,5 +1,48 @@
-.body {
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@200;300;400;500;600;700&display=swap');
+*{
+    font-family: "Comfortaa", sans-serif;
     text-align: center;
-    margin-top: 300px;
+    margin-top: 250px;
     font-size: 50px;
+    color: #cb0000;
 }
+@keyframes blinking {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes background-blinking {
+  0% {
+    background-color: #ffffff;
+  }
+  50% {
+    background-color: #ff9292;
+  }
+  100% {
+    background-color: #c20000;
+  }
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  animation: background-blinking 1s infinite;
+}
+
+
+.blinking-text {
+  animation: blinking 1s infinite;
+}
+
