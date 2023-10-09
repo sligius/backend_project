@@ -22,4 +22,5 @@ from test_django import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('book/<int:book_id>/', views.book_detail, name='book_detail'),
+    path('', views.show_index),
 ]

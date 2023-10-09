@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -11,13 +12,13 @@
     <input type="checkbox" id="flip">
     <div class="cover">
       <div class="front">
-        <img src="back_img.jpg" alt="">
+        <img src="{% static 'images/back_img.jpg' %}" alt="">
         <div class="text">
           <span class="text-1">Every new book is a <br> new adventure</span>
         </div>
       </div>
       <div class="back">
-        <img class="backImg" src="back_img.jpg" alt="">
+        <img class="backImg" src="{% static 'images/back_img.jpg' %}" alt="">
       </div>
     </div>
     <div class="forms">
