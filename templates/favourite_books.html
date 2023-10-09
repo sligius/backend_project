@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/favourite_books.css' %}">
 </head>
 <body>
+    {% if user.favorite_books %}
     <div class="reader">
         <div class="main_info">
             {% for favourite_book in favourite_books %}
@@ -37,5 +38,8 @@
         </div>
     {% endfor %}
     </div>
+    {% else %}
+       <p class="else">Списка любимых книг пока нет</p>
+    {% endif %}
 </body>
 </html>
