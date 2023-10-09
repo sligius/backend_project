@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from .models import Book, FavoriteBook, Reader
 
@@ -9,7 +10,9 @@ def book_detail(request, book_id):
 
 
 def favourite_books(request, user):
-    favourite_books = FavoriteBook.objects.get()
+    user_object = User.objects.get(username=user)
+    reader = Reader.objects.get(user_id=user_object.id)
+    favourite_books = FavoriteBook.objects.filter(reader=reader)
 
     return render(request, 'favourite_books.html', {'favourite_books': favourite_books})
 
