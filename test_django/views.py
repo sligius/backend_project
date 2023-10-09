@@ -14,8 +14,11 @@ def favourite_books(request, user):
     user_object = User.objects.get(username=user)
     reader = Reader.objects.get(user_id=user_object.id)
     favourite_books = FavoriteBook.objects.filter(reader=reader)
-
-    return render(request, 'favourite_books.html', {'favourite_books': favourite_books})
+    current_user = request.user
+    if current_user.is_authenticated:
+        return render(request, 'favourite_books.html', {'favourite_books': favourite_books})
+    else:
+        return render(request, 'not_access.html')
 
 
 def show_index(request):
