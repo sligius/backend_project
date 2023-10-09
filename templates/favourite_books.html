@@ -9,15 +9,16 @@
 <body>
     <div class="reader">
         <div class="main_info">
-            <h1>{{ favourite_books.reader.user}}</h1>
-            <p>Имя: {{ favourite_books.reader.first_name }}</p>
-            <p>Фамилия: {{ favourite_books.reader.last_name }}</p>
-            <p>Email: {{ favourite_books.reader.email }}</p>
+            {% for favourite_book in favourite_books %}
+            <h1>{{ favourite_book.reader.user}}</h1>
+            <p>Имя: {{ favourite_book.reader.first_name }}</p>
+            <p>Фамилия: {{ favourite_book.reader.last_name }}</p>
+            <p>Email: {{ favourite_book.reader.email }}</p>
         </div>
         <div class="favourite_books">
             <h2>Любимые книги</h2>
             <div class="book_container">
-            {% for book in favourite_books.book.all %}
+            {% for book in favourite_book.book.all %}
                 <div class="book">
                 <div class="main_book_info">
                     <h3>{{ book.title }}</h3>
@@ -34,6 +35,7 @@
             {% endfor %}
             </div>
         </div>
+    {% endfor %}
     </div>
 </body>
 </html>

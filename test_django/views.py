@@ -10,6 +10,7 @@ def book_detail(request, book_id):
 
 
 def favourite_books(request, user):
+    #favourite_books = FavoriteBook.objects.get()
     user_object = User.objects.get(username=user)
     reader = Reader.objects.get(user_id=user_object.id)
     favourite_books = FavoriteBook.objects.filter(reader=reader)
