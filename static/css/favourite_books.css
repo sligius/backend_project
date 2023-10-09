@@ -24,8 +24,10 @@
     padding: 40px 30px;
 }
 
+.main_info {
+    margin-left: 20px;
+}
 .main_info p {
-    margin-left: -5px;
     font-style: italic;
 }
 .main_book_info p{

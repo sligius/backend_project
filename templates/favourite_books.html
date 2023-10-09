@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/favourite_books.css' %}">
 </head>
 <body>
-    {% if user.favorite_books %}
+    {% if favourite_books %}
     <div class="reader">
         <div class="main_info">
             {% for favourite_book in favourite_books %}
