@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reader Profile</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/favourite_books.css' %}">
+</head>
+<body>
+    <div class="reader">
+        <div class="main_info">
+            <h1>{{ favourite_books.reader.user}}</h1>
+            <p>Имя: {{ favourite_books.reader.first_name }}</p>
+            <p>Фамилия: {{ favourite_books.reader.last_name }}</p>
+            <p>Email: {{ favourite_books.reader.email }}</p>
+        </div>
+        <div class="favourite_books">
+            <h2>Любимые книги</h2>
+            <div class="book_container">
+            {% for book in favourite_books.book.all %}
+                <div class="book">
+                <div class="main_book_info">
+                    <h3>{{ book.title }}</h3>
+                    <p>{% for author in book.author.all %}{{ author.name }}{% if not forloop.last %},
+                    {% endif %}{% endfor %}</p>
+                </div>
+                    <p data-before="Год публикации:">{{ book.publication_year }}</p>
+                    <p data-before="Описание:"> {{ book.description }}</p>
+                    <p data-before="Жанры:">{% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %},
+                    {% endif %}{% endfor %}</p>
+                </div>
+            {% empty %}
+                <p>No favorite books found.</p>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

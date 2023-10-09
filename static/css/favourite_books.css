@@ -1,70 +1,70 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@200;300;400;500;600;700&display=swap');
+
+*{
+    font-family: "Comfortaa", sans-serif;
+}
+
+.favourite_books h2{
+    text-align: center;
+    font-size: 40px;
+}
+.book_container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .book {
     background-color: #f8f1ff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    margin: 30px auto;
-    font-family: "Comfortaa" , sans-serif;
+    margin: 30px;
+    font-family: "Comfortaa", sans-serif;
     position: relative;
-    max-width: 850px;
+    max-width: 800px;
     width: 100%;
     padding: 40px 30px;
-    perspective: 2700px;
 }
 
-.main_info p{
+.main_info p {
     margin-left: -5px;
     font-style: italic;
 }
-
-.container{
-  position: relative;
-  max-width: 850px;
-  width: 100%;
-  background: #fff;
-  padding: 40px 30px;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-}
-
-.book h1 {
-    font-size: 30px;
-    margin-bottom: -10px;
-    font-family: 'Comfortaa', sans-serif;
+.main_book_info p{
+    margin-left: -5px;
+    font-style: italic;
 }
 
 .book p {
     font-size: 16px;
     margin-bottom: 8px;
+
 }
 
 .book h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
+    font-size: 25px;
+    margin-bottom: -10px;
     font-family: 'Comfortaa', sans-serif;
 }
 
-.book::before {
-    content: '';
-    width: 100%;
-    height: 10px;
-    background-color: rgba(178, 42, 232, 0.5);
-    display: block;
-    margin-bottom: 30px;
-    border-radius: 10px;
-}
-
+.book::before,
 .book::after {
     content: '';
     width: 100%;
     height: 10px;
     background-color: rgba(178, 42, 232, 0.5);
     display: block;
-    margin-top: 30px;
     border-radius: 10px;
+}
+
+.book::before {
+    margin-bottom: 30px;
+}
+
+.book::after {
+    margin-top: 30px;
 }
 
 .book p::before {
     content: attr(data-before);
-    color: #5e5e5e;
+    color: rgba(94, 94, 94, 0.65);
     margin-right: 5px;
 }
-
