@@ -12,9 +12,26 @@
             <h1>{{ book.title }}</h1>
             <p>{% for author in book.author.all %}{{ author.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
         </div>
-        <p data-before="Год публикации:">{{ book.publication_year }}</p>
-        <p data-before="Описание:">{{ book.description }}</p>
-        <p data-before="Жанры:">{% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+
+        <main>
+            <p data-before="Год публикации:">{{ book.publication_year }}</p>
+            <p data-before="Описание:">{{ book.description }}</p>
+            <p data-before="Жанры:">{% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+        </main>
+
+        <div class="reviews">
+            <h3>Рецензии:</h3>
+            {% for review in reviews %}
+                <div class="quote">
+                <div class="critic_name">
+                    <p>{{ review.critic }}:</p>
+                </div>
+                    <p>{{ review.content }}</p>
+                </div>
+            {% empty %}
+                <p>Рецензий пока нет.</p>
+            {% endfor %}
+        </div>
     </div>
 </body>
 </html>

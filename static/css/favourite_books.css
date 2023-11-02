@@ -7,6 +7,9 @@
 .favourite_books h2{
     text-align: center;
     font-size: 40px;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+    margin-bottom: 5px;
 }
 .book_container{
     display: flex;

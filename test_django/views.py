@@ -1,12 +1,12 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render
-from .models import Book, FavoriteBook, Reader
+from .models import Book, FavoriteBook, Reader, Review
 
 
 def book_detail(request, book_id):
     book = Book.objects.get(pk=book_id)
-
-    return render(request, 'book_detail.html', {'book': book})
+    reviews = Review.objects.filter(book=book)
+    return render(request, 'book_detail.html', {'book': book, 'reviews': reviews})
 
 
 def reader_profile(request, user):
