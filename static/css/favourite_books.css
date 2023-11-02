@@ -67,6 +67,23 @@
     color: rgba(94, 94, 94, 0.65);
     margin-right: 5px;
 }
+.button-link {
+    margin-top: 15px;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3c2d4b;
+    border: 2px solid #000;
+    border-radius: 25px;
+    color: #d4b4ef;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-link:hover {
+    background-color: #e8d9ff;
+    color: black;
+}
 
 .else {
     text-align: center;

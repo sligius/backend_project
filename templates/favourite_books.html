@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Reader Profile</title>
+    <title>Favourite books</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/favourite_books.css' %}">
 </head>
@@ -24,6 +24,7 @@
                     <p data-before="Описание:"> {{ book.description }}</p>
                     <p data-before="Жанры:">{% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %},
                     {% endif %}{% endfor %}</p>
+                    <a href="{% url 'book_detail' book_id=book.id %}" class="button-link">Подробнее</a>
                 </div>
             {% empty %}
                 <p>No favorite books found.</p>
