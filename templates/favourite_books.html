@@ -9,15 +9,9 @@
 <body>
     {% if favourite_books %}
     <div class="reader">
-        <div class="main_info">
-            {% for favourite_book in favourite_books %}
-            <h1>{{ favourite_book.reader.user}}</h1>
-            <p>Имя: {{ favourite_book.reader.first_name }}</p>
-            <p>Фамилия: {{ favourite_book.reader.last_name }}</p>
-            <p>Email: {{ favourite_book.reader.email }}</p>
-        </div>
+        {% for favourite_book in favourite_books %}
         <div class="favourite_books">
-            <h2>Любимые книги</h2>
+            <h2>Любимые книги {{ favourite_book.reader.user}}</h2>
             <div class="book_container">
             {% for book in favourite_book.book.all %}
                 <div class="book">
@@ -36,8 +30,8 @@
             {% endfor %}
             </div>
         </div>
-    {% endfor %}
     </div>
+    {% endfor %}
     {% else %}
        <p class="else">Списка любимых книг пока нет</p>
     {% endif %}

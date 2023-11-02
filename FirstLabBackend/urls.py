@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('book/<int:book_id>/', views.book_detail, name='book_detail'),
     path('favourite_books/<str:user>/', views.favourite_books, name='favourite_books'),
+    path('profile/<str:user>/', views.reader_profile, name='reader_profile'),
     path('', views.show_index),
 ]

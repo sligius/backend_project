@@ -9,8 +9,12 @@ def book_detail(request, book_id):
     return render(request, 'book_detail.html', {'book': book})
 
 
+def reader_profile(request, user):
+    reader = Reader.objects.get(user__username=user)
+    return render(request, 'reader_profile.html', {'reader': reader})
+
+
 def favourite_books(request, user):
-    #favourite_books = FavoriteBook.objects.get()
     user_object = User.objects.get(username=user)
     reader = Reader.objects.get(user_id=user_object.id)
     favourite_books = FavoriteBook.objects.filter(reader=reader)

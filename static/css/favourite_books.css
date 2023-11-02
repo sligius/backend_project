@@ -11,7 +11,7 @@
 .book_container{
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 }
 .book {
     background-color: #f8f1ff;
@@ -22,14 +22,11 @@
     max-width: 800px;
     width: 100%;
     padding: 40px 30px;
+    flex-direction: column;
+    flex: 1;
+    align-self: stretch;
 }
 
-.main_info {
-    margin-left: 20px;
-}
-.main_info p {
-    font-style: italic;
-}
 .main_book_info p{
     margin-left: -5px;
     font-style: italic;
