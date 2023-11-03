@@ -44,6 +44,7 @@ p {
 }
 
 .submit-button {
+    font-family: "Comfortaa", sans-serif;
     background-color: rgba(186, 68, 255, 0.83);
     color: #ffffff;
     padding: 10px 20px;
@@ -51,6 +52,7 @@ p {
     border-radius: 25px;
     font-size: 16px;
     cursor: pointer;
+    margin-left: 30%;
 }
 
 .submit-button:hover {
