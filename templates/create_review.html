@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Create Review</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/create_review.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Добавить рецензию</h1>
+            <form method="post">
+                {% csrf_token %}
+                <p>{{ form.critic.label }}: {{ form.critic }}</p>
+                <p>{{ form.book.label }}: {{ form.book }}</p>
+                <p>{{ form.content.label }}: {{ form.content }}</p>
+                <button class="submit-button" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

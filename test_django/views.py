@@ -1,6 +1,18 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Book, FavoriteBook, Reader, Review
+from .forms import ReviewForm
+
+
+def create_review(request):
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save()
+            return redirect('book_detail', book_id=review.book.id)
+    else:
+        form = ReviewForm()
+    return render(request, 'create_review.html', {'form': form})
 
 
 def book_detail(request, book_id):
@@ -30,6 +42,5 @@ def show_index(request):
         return render(request, 'index.html')
     else:
         pass
-
 
 # Create your views here.
