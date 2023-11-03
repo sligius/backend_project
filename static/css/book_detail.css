@@ -66,3 +66,26 @@
 .critic_name {
     font-weight: bold;
 }
+
+.button-link {
+    font-size: 12px;
+    display: inline-block;
+    padding: 7px 15px;
+    background-color: #e8d9ff;
+    border: 1px solid rgba(0, 0, 0, 0.17);
+    border-radius: 25px;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 5px;
+    margin-left: 85%;
+    text-align: center;
+}
+
+.button-link:hover {
+    background-color: #e8d9ff;
+    color: black;
+    color: #ffffff;
+    background-color: rgba(94, 56, 136, 0.36);
+}

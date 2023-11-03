@@ -13,7 +13,7 @@
 }
 .book_container{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: flex-start;
 }
 .book {
