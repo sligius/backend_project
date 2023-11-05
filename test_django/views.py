@@ -60,12 +60,13 @@ def show_index(request):
                 login(request, user)
                 return redirect('home/')
             except:
-                return redirect('/')
+                return redirect('index/')
 
     #return render(request, 'index.html')
 
 
 def home_page(request):
-    if request.method == 'GET':
-        return render(request, 'home_page.html')
+    books = Book.objects.all()
+    context = {'books': books}
+    return render(request, 'home_page.html', context)
 # Create your views here.

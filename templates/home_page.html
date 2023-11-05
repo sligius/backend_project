@@ -3,8 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home_page.css' %}">
 </head>
 <body>
-<p>hi</p>
+<header>
+    <nav>
+        <ul id="menu-bar">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Books</a>
+                <ul>
+                    <li><a href="#">Book Shop</a></li>
+                    <li><a href="#">Collectables</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact Us</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+<div class="webBody1">
+    <h1> Добро пожаловать в книжный рай </h1>
+    <h2>This is a test site. It will serve as proof of concept</h2>
+    <img class="img" src="{% static 'images/book_shelf.png' %}" alt="">
+
+    <div><h2 class="webBody2">We specialise in the trade of previously loved books, specifically in Africana. Visit our
+        store to find the book you have been looking for or get in touch, and we will do our utmost to assist in finding
+        the item you require. Please use the menu bar to navigate to the appropriate department</h2></div>
+    <ul>
+    <div class="book_container">
+        {% for book in books %}
+            <div class="book">
+                <div class="main_book_info">
+                    <h3>{{ book.title }}</h3>
+                    <p>{% for author in book.author.all %}{{ author.name }}{% if not forloop.last %},
+                    {% endif %}{% endfor %}</p>
+                </div>
+                <p data-before="Год публикации:">{{ book.publication_year }}</p>
+                <p data-before="Описание:"> {{ book.description }}</p>
+                <p data-before="Жанры:">{% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %},
+                {% endif %}{% endfor %}</p>
+                <a href="{% url 'book_detail' book_id=book.id %}" class="button-link">Подробнее</a>
+            </div>
+        {% endfor %}
+        </div>
+    </ul>
+</div>
+
 </body>
 </html>
