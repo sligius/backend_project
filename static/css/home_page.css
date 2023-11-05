@@ -16,6 +16,8 @@
     border: solid 1px #d4b7de;
     position: relative;
     z-index: 999;
+    display: flex;
+    justify-content: flex-end;
 }
 
 
@@ -26,6 +28,14 @@
     float: left;
     position: relative;
     list-style: none;
+}
+
+#menu-bar .last-item {
+    margin-right: 10px;
+    margin-left: auto;
+    background: #faf8ff;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+    border-radius: 10px;
 }
 
 #menu-bar a {

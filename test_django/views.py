@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .models import Book, FavoriteBook, Reader, Review
@@ -60,7 +60,7 @@ def show_index(request):
                 login(request, user)
                 return redirect('home/')
             except:
-                return redirect('index/')
+                return redirect('login')
 
     #return render(request, 'index.html')
 
@@ -69,4 +69,9 @@ def home_page(request):
     books = Book.objects.all()
     context = {'books': books}
     return render(request, 'home_page.html', context)
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 # Create your views here.
