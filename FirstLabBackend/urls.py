@@ -24,5 +24,6 @@ urlpatterns = [
     path('favourite_books/<str:user>/', views.favourite_books, name='favourite_books'),
     path('profile/<str:user>/', views.reader_profile, name='reader_profile'),
     path('', views.show_index),
+    path('home/', views.home_page),
     path('new_review/', views.create_review, name='create_review'),
 ]

@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .models import Book, FavoriteBook, Reader, Review
@@ -40,7 +41,31 @@ def favourite_books(request, user):
 def show_index(request):
     if request.method == 'GET':
         return render(request, 'index.html')
-    else:
-        pass
+    elif request.method == 'POST':
+        if 'email' in request.POST:
+            print('registration')
+            username = request.POST.get('create_username')
+            email = request.POST.get('email')
+            password = request.POST.get('create_password')
+            if username and email and password:
+                user = User.objects.create_user(username=username, email=email, password=password)
 
+            login(request, user)
+            return redirect('home/')
+        else:
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user = authenticate(request, username=username, password=password)
+            try:
+                login(request, user)
+                return redirect('home/')
+            except:
+                return redirect('/')
+
+    #return render(request, 'index.html')
+
+
+def home_page(request):
+    if request.method == 'GET':
+        return render(request, 'home_page.html')
 # Create your views here.
