@@ -3,36 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Book Detail</title>
+    {% extends 'base.html' %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/book_detail.css' %}">
+    {% block additional_css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/book_detail.css' %}">
+    {% endblock %}
 </head>
+
 <body>
+{% block content %}
     <div class="book">
         <div class="main_info">
             <h1>{{ book.title }}</h1>
-            <p>{% for author in book.author.all %}{{ author.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+            <p>{% for author in book.author.all %}{{ author.name }}{% if not forloop.last %},{% endif %}{% endfor %}</p>
         </div>
 
         <main>
             <p data-before="Год публикации:">{{ book.publication_year }}</p>
             <p data-before="Описание:">{{ book.description }}</p>
-            <p data-before="Жанры:">{% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+            <p data-before="Жанры:">
+                {% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
         </main>
 
         <div class="reviews">
             <h3>Рецензии:</h3>
             {% for review in reviews %}
                 <div class="quote">
-                <div class="critic_name">
-                    <p>{{ review.critic }}:</p>
-                </div>
+                    <div class="critic_name">
+                        <p>{{ review.critic }}:</p>
+                    </div>
                     <p>{{ review.content }}</p>
                 </div>
             {% empty %}
                 <p>Рецензий пока нет.</p>
             {% endfor %}
         </div>
-    <a href="{% url 'create_review' %}" class="button-link">Создать рецензию</a>
+        <a href="{% url 'create_review' %}" class="button-link">Создать рецензию</a>
     </div>
+{% endblock %}
 </body>
 </html>

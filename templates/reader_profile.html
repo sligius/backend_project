@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html>
-<html lang="ru">    
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Reader profile</title>
+    {% extends 'base.html' %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/reader_profile.css' %}">
+    {% block additional_css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/reader_profile.css' %}">
+    {% endblock %}
 </head>
+
 <body>
+{% block content %}
     <div class="container">
         <div class="card">
             <h1>Профиль {{ reader.user.username }}</h1>
@@ -29,5 +34,6 @@
             </div>
         </div>
     </div>
+{% endblock %}
 </body>
 </html>

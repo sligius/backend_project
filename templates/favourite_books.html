@@ -3,38 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Favourite books</title>
+    {% extends 'base.html' %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/favourite_books.css' %}">
+    {% block additional_css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/favourite_books.css' %}">
+    {% endblock %}
 </head>
+
 <body>
+{% block content %}
     {% if favourite_books %}
-    <div class="reader">
-        {% for favourite_book in favourite_books %}
-        <div class="favourite_books">
-            <h2>Любимые книги {{ favourite_book.reader.user}}</h2>
-            <div class="book_container">
-            {% for book in favourite_book.book.all %}
-                <div class="book">
-                <div class="main_book_info">
-                    <h3>{{ book.title }}</h3>
-                    <p>{% for author in book.author.all %}{{ author.name }}{% if not forloop.last %},
-                    {% endif %}{% endfor %}</p>
+        <div class="reader">
+            {% for favourite_book in favourite_books %}
+                <div class="favourite_books">
+                    <h2>Любимые книги {{ favourite_book.reader.user }}</h2>
+                    <div class="book_container">
+                        {% for book in favourite_book.book.all %}
+                            <div class="book">
+                                <div class="main_book_info">
+                                    <h3>{{ book.title }}</h3>
+                                    <p>{% for author in book.author.all %}{{ author.name }}{% if not forloop.last %},
+                                    {% endif %}{% endfor %}</p>
+                                </div>
+                                <p data-before="Год публикации:">{{ book.publication_year }}</p>
+                                <p data-before="Описание:"> {{ book.description }}</p>
+                                <p data-before="Жанры:">
+                                    {% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %},
+                                    {% endif %}{% endfor %}</p>
+                                <a href="{% url 'book_detail' book_id=book.id %}" class="button-link">Подробнее</a>
+                            </div>
+                        {% empty %}
+                            <p>No favorite books found.</p>
+                        {% endfor %}
+                    </div>
                 </div>
-                    <p data-before="Год публикации:">{{ book.publication_year }}</p>
-                    <p data-before="Описание:"> {{ book.description }}</p>
-                    <p data-before="Жанры:">{% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %},
-                    {% endif %}{% endfor %}</p>
-                    <a href="{% url 'book_detail' book_id=book.id %}" class="button-link">Подробнее</a>
                 </div>
-            {% empty %}
-                <p>No favorite books found.</p>
             {% endfor %}
-            </div>
-        </div>
-    </div>
-    {% endfor %}
     {% else %}
-       <p class="else">Списка любимых книг пока нет</p>
+        <p class="else">Списка любимых книг пока нет</p>
     {% endif %}
+{% endblock %}
 </body>
 </html>

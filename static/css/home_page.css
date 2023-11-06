@@ -4,126 +4,6 @@
     font-family: "Comfortaa", sans-serif;
 }
 
-/*Menu-bar ID created*/
-#menu-bar {
-    width: 99%;
-    padding: 6px 6px 4px 6px;
-    height: 40px;
-    line-height: 1;
-    border-radius: 24px;
-    box-shadow: 2px 2px 3px #9e8aa8;
-    background: rgba(242, 226, 255, 0.94);
-    border: solid 1px #d4b7de;
-    position: relative;
-    z-index: 999;
-    display: flex;
-    justify-content: flex-end;
-}
-
-
-/*Menu li items' style defined*/
-#menu-bar li {
-    margin: 6px 0;
-    padding: 0 6px;
-    float: left;
-    position: relative;
-    list-style: none;
-}
-
-#menu-bar .last-item {
-    margin-right: 10px;
-    margin-left: auto;
-    background: #faf8ff;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-    border-radius: 10px;
-}
-
-#menu-bar a {
-    font-weight: bold;
-    font-size: 16px;
-    color: #4d4d4d;
-    text-decoration: none;
-    display: block;
-    padding: 6px 20px;
-    margin: 0 0 6px;
-    border-radius: 10px;
-    text-shadow: 1px 1px 2px #8d8d8d;
-}
-
-#menu-bar li ul li a {
-    margin: 0;
-}
-
-#menu-bar .active a, #menu-bar li:hover > a {
-    background: #dfb2ff;
-    color: #444;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-    text-shadow: 2px 2px 3px #fff;
-}
-
-#menu-bar ul li:hover a, #menu-bar li:hover li a {
-    background: none;
-    border: none;
-    color: #666;
-    -box-shadow: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-}
-
-
-#menu-bar li:hover > ul {
-    display: block;
-}
-
-#menu-bar ul {
-    background: rgba(242, 226, 255, 0.67);
-    display: none;
-    margin: 0;
-    padding: 0;
-    width: 185px;
-    position: absolute;
-    top: 30px;
-    left: 0;
-    border: solid 1px #b4b4b4;
-    border-radius: 10px;
-    box-shadow: 2px 2px 3px #222;
-}
-
-#menu-bar ul li {
-    float: none;
-    margin: 0;
-    padding: 0;
-}
-
-#menu-bar ul a {
-    padding: 10px 15px;
-    font-size: 14px;
-    font-weight: normal;
-}
-
-#menu-bar ul li:first-child > a {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-#menu-bar ul li:last-child > a {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-#menu-bar:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.nav li ul {
-    position: absolute;
-    left: 0;
-    top: 36px;
-    z-index: 1;
-}
-
 .webBody1 {
     padding: 10px;
     background: rgba(242, 226, 255, 0.94);
@@ -141,7 +21,9 @@ img {
 
 .webBody1 h1 {
     text-align: center;
-    font-size: 46px
+    font-size: 46px;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
 }
 
 .webBody1 h2 {

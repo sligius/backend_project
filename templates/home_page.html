@@ -3,36 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-
+    {% extends 'base.html' %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/home_page.css' %}">
+    {% block additional_css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/home_page.css' %}">
+    {% endblock %}
 </head>
+
 <body>
 {% block content %}
-    <header>
-        <nav>
-            <ul id="menu-bar">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Books</a>
-                    <ul>
-                        <li><a href="#">Book Shop</a></li>
-                        <li><a href="#">Collectables</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact Us</a></li>
-                <li class="last-item">
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'logout' %}">Выйти</a>
-                    {% else %}
-                        <a href="{% url 'login' %}">Войти</a>
-                    {% endif %}
-                </li>
-            </ul>
-        </nav>
-    </header>
-
 
     <div class="webBody1">
         <h1> Добро пожаловать в книжный рай </h1>
