@@ -25,6 +25,6 @@ urlpatterns = [
     path('profile/<str:user>/', views.reader_profile, name='reader_profile'),
     path('', views.show_index, name='login'),
     path('logout/', views.logout_view, name='logout'),
-    path('home/', views.home_page),
+    path('home/', views.home_page, name='home'),
     path('new_review/', views.create_review, name='create_review'),
 ]

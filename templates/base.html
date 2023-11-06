@@ -11,7 +11,7 @@
 <header>
     <nav>
         <ul id="menu-bar-template">
-            <li class=""><a href="#">Home</a></li>
+            <li {% if request.path_info == '/home/' %} class="active" {% endif %}><a href="{% url 'home' %}">Home</a></li>
             <li><a href="#">Books</a>
                 <ul>
                     <li><a href="#">Book Shop</a></li>
