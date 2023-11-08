@@ -17,19 +17,25 @@
             <h1>Профиль {{ reader.user.username }}</h1>
 
             <div>
-                <p>Имя: {{ reader.first_name }}</p>
+                <p>Имя: {{ reader.first_name }}
+                    <a class="edit-link" href="{% url 'edit_profile' reader.user.username %}">
+                        <i class="fas fa-edit edit-icon"></i>
+                    </a>
+                </p>
             </div>
-
             <div>
-                <p>Фамилия: {{ reader.last_name }}</p>
+                <p>Фамилия: {{ reader.last_name }}
+                    <a class="edit-link" href="{% url 'edit_profile' reader.user.username %}">
+                        <i class="fas fa-edit edit-icon"></i>
+                    </a>
+                </p>
             </div>
-            <a href="{% url 'edit_profile' reader.user.username %}">Редактировать профиль</a>
             <div>
                 <p>Email: {{ reader.email }}</p>
             </div>
 
             <div>
-                <a href="{% url 'favourite_books' reader.user.username %}">Любимые книги</a>
+                <a class="fav-link" href="{% url 'favourite_books' reader.user.username %}">Любимые книги</a>
             </div>
         </div>
     </div>
