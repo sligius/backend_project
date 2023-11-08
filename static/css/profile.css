@@ -49,16 +49,22 @@ a:hover {
 .edit-link {
     display: inline-block;
     text-decoration: none;
-    color: #000; /* Цвет ссылки */
+    color: #000;
 }
 
 .edit-icon {
     vertical-align: middle;
-    margin-left: 5px; /* Отступ слева для значка */
+    margin-left: 5px;
 }
 
-.profile-info {
+.reader-info {
     display: flex;
+}
+
+.critic-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .profile-info-left {
@@ -67,4 +73,13 @@ a:hover {
 
 .profile-info-right {
     flex: 1;
+}
+.critic-info-top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.critic-info-bottom {
+    margin-top: 20px; /* добавляем отступ сверху */
 }

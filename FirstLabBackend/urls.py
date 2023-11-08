@@ -23,6 +23,7 @@ urlpatterns = [
     path('book/<int:book_id>/', views.book_detail, name='book_detail'),
     path('favourite_books/<str:user>/', views.favourite_books, name='favourite_books'),
     path('profile/<str:user>/', views.reader_profile, name='reader_profile'),
+    path('critic/<str:username>/', views.critic_profile, name='critic_profile'),
     path('', views.show_index, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('home/', views.home_page, name='home'),

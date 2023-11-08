@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Critic profile</title>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% load filters %}
+    {% block additional_css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+    {% endblock %}
+</head>
+<body>
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <h1>Профиль критика {{ critic.user.username }}</h1>
+            <div class="critic-info">
+                <div class="critic-info-top">
+                    <div class="profile-info-left">
+                        <p>Имя: {{ critic.first_name }}</p>
+                        <p>Фамилия: {{ critic.last_name|default:"неизвестна" }}</p>
+                    </div>
+
+                    <div class="profile-info-right">
+                        <p>Email: {{ critic.email }}</p>
+                        <p>Организация: {{ critic.organization|default:"неизвестна" }}</p>
+                    </div>
+                </div>
+                <div class="critic-info-bottom">
+                    <p>Стаж работы: {{ critic.years_of_experience|russian_plural_form }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

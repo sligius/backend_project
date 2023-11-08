@@ -1,9 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .models import Book, FavoriteBook, Reader, Review
+from .models import Book, FavoriteBook, Reader, Review, Critic
 from .forms import ReviewForm
 
 
@@ -28,6 +27,9 @@ def reader_profile(request, user):
     reader = Reader.objects.get(user__username=user)
     return render(request, 'reader_profile.html', {'reader': reader})
 
+def critic_profile(request, username):
+    critic = Critic.objects.get(user__username=username)
+    return render(request, 'critic_profile.html', {'critic': critic})
 
 def favourite_books(request, user):
     user_object = User.objects.get(username=user)
