@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 from django import forms
@@ -15,6 +17,7 @@ class Reader(models.Model):
     last_name = models.CharField(max_length=100, verbose_name="Фамилия", help_text="Введите фамилию",
                                  null=True, blank=True)
     email = models.EmailField(verbose_name='Email')
+    date_of_birth = models.DateField(verbose_name='Дата рождения', blank=True, null=True, default=datetime.date.today)
 
     def __str__(self):
         return self.user.username
@@ -30,6 +33,8 @@ class Critic(models.Model):
     last_name = models.CharField(max_length=100, verbose_name='Фамилия', help_text='Введите фамилию',
                                  null=True, blank=True)
     email = models.EmailField(verbose_name='Email')
+    organization = models.CharField(max_length=200, verbose_name='Организация', blank=True, null=True)
+    years_of_experience = models.PositiveIntegerField(verbose_name='Стаж работы', blank=True, null=True)
 
     def __str__(self):
         return self.user.username

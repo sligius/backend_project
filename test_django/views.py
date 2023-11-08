@@ -95,10 +95,12 @@ def edit_profile(request, user):
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
+        date_of_birth = request.POST.get('date_of_birth')
 
         reader = Reader.objects.get(user__username=user)
         reader.first_name = first_name
         reader.last_name = last_name
+        reader.date_of_birth = date_of_birth
         reader.save()
 
         return redirect('reader_profile', user=request.user.username)

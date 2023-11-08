@@ -2,7 +2,7 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 
 body, html {
-    height: 100%;
+    height: calc(100% - 46px);
     padding: 0;
     font-family: "Comfortaa", sans-serif;
     background-color: #f8f1ff;
@@ -55,4 +55,16 @@ a:hover {
 .edit-icon {
     vertical-align: middle;
     margin-left: 5px; /* Отступ слева для значка */
+}
+
+.profile-info {
+    display: flex;
+}
+
+.profile-info-left {
+    flex: 1;
+}
+
+.profile-info-right {
+    flex: 1;
 }
