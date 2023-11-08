@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@200;300;400;500;600;700&display=swap');
+
+body {
+    box-sizing: border-box;
+    background: #f8ebff;
+    font-family: "Comfortaa", sans-serif;
+    display: flex;
+}
+
+.container {
+    background: #fff;
+    width: 100%;
+    padding: 1rem;
+}
+
+.form-group {
+
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    color: #374151;
+    font-size: 16px;
+    line-height: 19px;
+    margin-bottom: 10px;
+}
+
+.form-group [type] {
+    border: 1px solid #d2d6db;
+    border-radius: 25px;
+    padding: 15px;
+}
+
+.form-group [type]:hover {
+    border-color: #a8afb9;
+}
+
+.form-group [type]:focus {
+    border-color: #5850eb;
+}
+
+.title {
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: bold;
+    color: #374151;
+    padding-bottom: 11px;
+    border-bottom: 1px solid #d7dbdf;
+}
+
+.submit-button {
+    font-family: "Comfortaa", sans-serif;
+    font-weight: bold;
+    line-height: 19px;
+    background: #9b50eb;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 25px;
+    color: white;
+    width: 100%;
+    margin-top: 24px;
+}
+
+.submit-button:hover {
+    background: #b181fa;
+}
+
+.submit-button:focus {
+    background: #7f39e8;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#profile-form > form > div {
+    margin-bottom: 10px;
+}
+
+.form-container div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.form-container label {
+    width: 100px;
+}
+
+.form-container input:not(.submit-button) {
+    flex: 0.2;
+}
+
+@media screen and (min-width: 768px) {
+    body {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container {
+        margin: 2rem;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 9px;
+        max-width: 32rem;
+        padding: 2rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .container {
+        max-width: 80%;
+        width: 100%;
+    }
+
+
+    .submit-button {
+        width: auto;
+    }
+}
+
+

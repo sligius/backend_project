@@ -4,7 +4,6 @@
     font-family: "Comfortaa", sans-serif;
 }
 
-/*Menu-bar ID created*/
 #menu-bar-template {
     width: 99%;
     padding: 6px 6px 4px 6px;
@@ -20,8 +19,6 @@
     justify-content: flex-end;
 }
 
-
-/*Menu li items' style defined*/
 #menu-bar-template li {
     margin: 6px 0;
     padding: 0 6px;

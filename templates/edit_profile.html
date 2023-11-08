@@ -2,25 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Редактировать профиль</title>
+    <title>Редактировать данные</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/edit_profile.css' %}">
 </head>
 <body>
-<h2>Редактировать профиль</h2>
-    <form method="post" action="{% url 'edit_profile' reader.user.username %}">
-        {% csrf_token %}
-        <div>
-            <label for="id_first_name">Имя:</label>
-            <input type="text" id="id_first_name" name="first_name" value="{{ reader.first_name }}">
-        </div>
+<div class="container">
+    <div class="form-group">
+        <h2 class="title">Редактировать данные</h2>
+        <div class="form-container" id="profile-form">
+            <form method="post" action="{% url 'edit_profile' reader.user.username %}">
+                {% csrf_token %}
+                <div>
+                    <label for="id_first_name">Имя:</label>
+                    <input type="text" id="id_first_name" name="first_name" value="{{ reader.first_name }}">
+                </div>
 
-        <div>
-            <label for="id_last_name">Фамилия:</label>
-            <input type="text" id="id_last_name" name="last_name" value="{{ reader.last_name }}">
-        </div>
+                <div>
+                    <label for="id_last_name">Фамилия:</label>
+                    <input type="text" id="id_last_name" name="last_name" value="{{ reader.last_name }}">
+                </div>
 
-        <div>
-            <input type="submit" value="Сохранить изменения">
+                <div class="button-container">
+                    <input class="submit-button" type="submit" value="Сохранить изменения">
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
+</div>
 </body>
 </html>
