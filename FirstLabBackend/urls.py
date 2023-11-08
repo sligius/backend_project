@@ -27,4 +27,5 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('home/', views.home_page, name='home'),
     path('new_review/', views.create_review, name='create_review'),
+    path('edit_profile/<str:user>/', views.edit_profile, name='edit_profile'),
 ]

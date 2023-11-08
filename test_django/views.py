@@ -1,5 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import Book, FavoriteBook, Reader, Review
 from .forms import ReviewForm
@@ -49,6 +51,8 @@ def show_index(request):
             password = request.POST.get('create_password')
             if username and email and password:
                 user = User.objects.create_user(username=username, email=email, password=password)
+                reader = Reader.objects.create(user=user, email=email, first_name='New', last_name='User')
+                reader.save()
 
             login(request, user)
             return redirect('home/')
@@ -63,6 +67,44 @@ def show_index(request):
                 return redirect('login')
 
     #return render(request, 'index.html')
+
+'''
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+
+        try:
+            reader = Reader.objects.get(user=request.user)
+            reader.first_name = first_name
+            reader.last_name = last_name
+            reader.save()
+
+            return HttpResponse('Профиль успешно обновлен')
+        except Reader.DoesNotExist:
+            return HttpResponse('Профиль не найден')
+    else:
+        return HttpResponse('Метод не поддерживается')
+'''
+
+
+@login_required
+def edit_profile(request, user):
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+
+        reader = Reader.objects.get(user__username=user)
+        reader.first_name = first_name
+        reader.last_name = last_name
+        reader.save()
+
+        return redirect('reader_profile', user=request.user.username)
+
+    reader = Reader.objects.get(user__username=user)
+    return render(request, 'edit_profile.html', {'reader': reader})
 
 
 def home_page(request):
