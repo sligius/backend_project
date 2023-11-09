@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect
 from .models import Book, FavoriteBook, Reader, Review, Critic
 from .forms import ReviewForm
@@ -65,14 +65,19 @@ def show_index(request):
             return render(request, 'index.html')
         elif request.method == 'POST':
             if 'email' in request.POST:
-                print('registration')
                 username = request.POST.get('create_username')
                 email = request.POST.get('email')
                 password = request.POST.get('create_password')
                 if username and email and password:
-                    user = User.objects.create_user(username=username, email=email, password=password)
-                    reader = Reader.objects.create(user=user, email=email, first_name='New', last_name='User')
-                    reader.save()
+                    if not User.objects.filter(username=username).exists():
+                        user = User.objects.create_user(username=username, email=email, password=password)
+                        reader = Reader.objects.create(user=user, email=email, first_name='New', last_name='User')
+                        reader.save()
+
+                        reader_group = Group.objects.get(name='Readers')
+                        reader_group.user_set.add(user)
+                    else:
+                        return render(request, 'login_error.html')
 
                 login(request, user)
                 return redirect('home/')
@@ -143,5 +148,9 @@ def logout_view(request):
 
 def access_denied(request):
     return render(request, 'not_access.html')
+
+
+def incorrect_login(request):
+    return render(request, 'login_error.html')
 
 # Create your views here.
