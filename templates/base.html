@@ -13,7 +13,7 @@
         <ul id="menu-bar-template">
             <li {% if request.path_info == '/home/' %} class="active" {% endif %}><a href="{% url 'home' %}">Home</a>
             </li>
-            <li><a href="#">Books</a>
+            <li {% if request.path_info == '/books/' %} class="active" {% endif %}><a href="{% url 'books' %}">Books</a>
                 <ul>
                     <li><a href="#">Book Shop</a></li>
                     <li><a href="#">Collectables</a></li>

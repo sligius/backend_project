@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block additional_css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/home_page.css' %}">
+    {% endblock %}
+</head>
+
+<body>
+{% block content %}
+
+    <div class="webBody1">
+        <ul>
+            <div class="book_container">
+                {% for book in books %}
+                    <div class="book">
+                        <div class="main_book_info">
+                            <h3>{{ book.title }}</h3>
+                            <p>{% for author in book.author.all %}{{ author.name }}{% if not forloop.last %},
+                            {% endif %}{% endfor %}</p>
+                        </div>
+                        <p data-before="Год публикации:">{{ book.publication_year }}</p>
+                        <p data-before="Описание:"> {{ book.description }}</p>
+                        <p data-before="Жанры:">
+                            {% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %},
+                            {% endif %}{% endfor %}</p>
+                        <a href="{% url 'book_detail' book_id=book.id %}" class="button-link">Подробнее</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </ul>
+    </div>
+{% endblock %}
+</body>
+</html>

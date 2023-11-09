@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('book/<int:book_id>/', views.book_detail, name='book_detail'),
     path('favourite_books/<str:user>/', views.favourite_books, name='favourite_books'),
+    path('books/', views.book_list, name='books'),
     re_path(r'^profile/(?P<username>[\w.@+-]+)/$', views.profile_dispatcher, name='profile_dispatcher'),
     path('', views.show_index, name='login'),
     path('logout/', views.logout_view, name='logout'),

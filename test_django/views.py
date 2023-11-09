@@ -153,9 +153,13 @@ def edit_profile(request, user):
 
 
 def home_page(request):
+    return render(request, 'home_page.html')
+
+
+def book_list(request):
     books = Book.objects.all()
     context = {'books': books}
-    return render(request, 'home_page.html', context)
+    return render(request, 'book_list.html', context)
 
 
 def logout_view(request):
