@@ -91,5 +91,12 @@
 .else {
     text-align: center;
     margin-top: 300px;
-    font-size: 50px;
+    font-size: 40px;
+}
+
+.else-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
 }
