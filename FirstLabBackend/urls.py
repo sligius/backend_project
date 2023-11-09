@@ -29,4 +29,5 @@ urlpatterns = [
     path('home/', views.home_page, name='home'),
     path('new_review/', views.create_review, name='create_review'),
     path('edit_profile/<str:user>/', views.edit_profile, name='edit_profile'),
+    path('not_access/', views.access_denied, name='not_access'),
 ]

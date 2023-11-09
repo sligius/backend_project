@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .models import Book, FavoriteBook, Reader, Review, Critic
@@ -20,16 +20,31 @@ def create_review(request):
 def book_detail(request, book_id):
     book = Book.objects.get(pk=book_id)
     reviews = Review.objects.filter(book=book)
-    return render(request, 'book_detail.html', {'book': book, 'reviews': reviews})
+    user = request.user
+    user_belongs_to_critics_group = user.groups.filter(name='Critics').exists() or user.is_superuser
+    print("user_belongs_to_critics_group:", user_belongs_to_critics_group)
+    return render(request, 'book_detail.html',
+                  {'user_belongs_to_critics_group': user_belongs_to_critics_group, 'book': book, 'reviews': reviews})
 
 
+@login_required
+# @user_passes_test(lambda u: u.is_superuser or u.groups.filter(name='Readers').exists(), login_url='/not_access/')
 def reader_profile(request, user):
     reader = Reader.objects.get(user__username=user)
-    return render(request, 'reader_profile.html', {'reader': reader})
+    if reader.user == request.user:
+        return render(request, 'reader_profile.html', {'reader': reader})
+    else:
+        return render(request, 'not_access.html')
 
+
+@login_required
 def critic_profile(request, username):
     critic = Critic.objects.get(user__username=username)
-    return render(request, 'critic_profile.html', {'critic': critic})
+    if critic.user == request.user:
+        return render(request, 'critic_profile.html', {'critic': critic})
+    else:
+        return render(request, 'not_access.html')
+
 
 def favourite_books(request, user):
     user_object = User.objects.get(username=user)
@@ -43,32 +58,36 @@ def favourite_books(request, user):
 
 
 def show_index(request):
-    if request.method == 'GET':
-        return render(request, 'index.html')
-    elif request.method == 'POST':
-        if 'email' in request.POST:
-            print('registration')
-            username = request.POST.get('create_username')
-            email = request.POST.get('email')
-            password = request.POST.get('create_password')
-            if username and email and password:
-                user = User.objects.create_user(username=username, email=email, password=password)
-                reader = Reader.objects.create(user=user, email=email, first_name='New', last_name='User')
-                reader.save()
+    if request.user.is_authenticated:
+        return redirect('home/')
+    else:
+        if request.method == 'GET':
+            return render(request, 'index.html')
+        elif request.method == 'POST':
+            if 'email' in request.POST:
+                print('registration')
+                username = request.POST.get('create_username')
+                email = request.POST.get('email')
+                password = request.POST.get('create_password')
+                if username and email and password:
+                    user = User.objects.create_user(username=username, email=email, password=password)
+                    reader = Reader.objects.create(user=user, email=email, first_name='New', last_name='User')
+                    reader.save()
 
-            login(request, user)
-            return redirect('home/')
-        else:
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            user = authenticate(request, username=username, password=password)
-            try:
                 login(request, user)
                 return redirect('home/')
-            except:
-                return redirect('login')
+            else:
+                username = request.POST.get('username')
+                password = request.POST.get('password')
+                user = authenticate(request, username=username, password=password)
+                try:
+                    login(request, user)
+                    return redirect('home/')
+                except:
+                    return redirect('login')
 
-    #return render(request, 'index.html')
+    # return render(request, 'index.html')
+
 
 '''
 @login_required
@@ -120,4 +139,9 @@ def home_page(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+
+def access_denied(request):
+    return render(request, 'not_access.html')
+
 # Create your views here.
