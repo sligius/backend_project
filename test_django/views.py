@@ -6,15 +6,27 @@ from .models import Book, FavoriteBook, Reader, Review, Critic
 from .forms import ReviewForm
 
 
-def create_review(request):
+def create_review(request, book_id):
+    book = Book.objects.get(pk=book_id)
+    print(book)
     if request.method == 'POST':
         form = ReviewForm(request.POST)
+        print('request')
+        print(request.user.id)
+        print(Critic.objects.get(user_id=request.user.id))
         if form.is_valid():
-            review = form.save()
-            return redirect('book_detail', book_id=review.book.id)
+            review = form.save(commit=False)
+            review.critic = Critic.objects.get(user_id=request.user.id)
+            print(review.critic)
+            review.book = book
+            review.save()
+            print(review)
+            return redirect('book_detail', book_id=book_id)
     else:
-        form = ReviewForm()
-    return render(request, 'create_review.html', {'form': form})
+        initial_data = {'critic': Critic.objects.get(user_id=request.user.id), 'book': book}
+        form = ReviewForm(initial=initial_data)
+
+    return render(request, 'create_review.html', {'form': form, 'book': book, 'critic': Critic.objects.get(user_id=request.user.id)})
 
 
 def book_detail(request, book_id):

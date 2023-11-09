@@ -7,19 +7,31 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/create_review.css' %}">
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <h1>Добавить рецензию</h1>
-            <div class="form-container">
-                <form method="post">
-                    {% csrf_token %}
-                    <p>{{ form.critic.label }}: {{ form.critic }}</p>
-                    <p>{{ form.book.label }}: {{ form.book }}</p>
-                    <p>{{ form.content.label }}: {{ form.content }}</p>
-                    <button class="submit-button" type="submit">Отправить</button>
-                </form>
-            </div>
+<div class="container">
+    <div class="card">
+        <h1>Добавить рецензию</h1>
+        <div class="form-container">
+            <form method="post">
+                {% csrf_token %}
+                <p>{{ form.critic.label }}: {{ request.user.get_username }}
+                <input type="hidden" name="critic" value="{{ critic.id }}" /></p>
+                <p>{{ form.book.label }}: {{ book.title }}
+                 <input type="hidden" name="book" value="{{ book.id }}" />  </p>
+                <p>{{ form.content.label }}: {{ form.content }}</p>
+                <button class="submit-button" type="submit">Отправить</button>
+            </form>
+
+            {% if form.errors %}
+  <ul>
+    {% for field in form %}
+      {% for error in field.errors %}
+        <li>{{ field.label }}: {{ error }}</li>
+      {% endfor %}
+    {% endfor %}
+  </ul>
+{% endif %}
         </div>
     </div>
+</div>
 </body>
 </html>

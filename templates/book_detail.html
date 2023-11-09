@@ -39,7 +39,7 @@
             {% endfor %}
         </div>
         {% if user_belongs_to_critics_group %}
-            <a href="{% url 'create_review' %}" class="button-link">Создать рецензию</a>
+            <a href="{% url 'create_review' book.id %}" class="button-link">Создать рецензию</a>
         {% endif %}
     </div>
 {% endblock %}
