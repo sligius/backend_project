@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User, Group
+from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
 from .models import Book, FavoriteBook, Reader, Review, Critic
 from .forms import ReviewForm
@@ -8,25 +9,20 @@ from .forms import ReviewForm
 
 def create_review(request, book_id):
     book = Book.objects.get(pk=book_id)
-    print(book)
     if request.method == 'POST':
         form = ReviewForm(request.POST)
-        print('request')
-        print(request.user.id)
-        print(Critic.objects.get(user_id=request.user.id))
         if form.is_valid():
             review = form.save(commit=False)
             review.critic = Critic.objects.get(user_id=request.user.id)
-            print(review.critic)
             review.book = book
             review.save()
-            print(review)
             return redirect('book_detail', book_id=book_id)
     else:
         initial_data = {'critic': Critic.objects.get(user_id=request.user.id), 'book': book}
         form = ReviewForm(initial=initial_data)
 
-    return render(request, 'create_review.html', {'form': form, 'book': book, 'critic': Critic.objects.get(user_id=request.user.id)})
+    return render(request, 'create_review.html',
+                  {'form': form, 'book': book, 'critic': Critic.objects.get(user_id=request.user.id)})
 
 
 def book_detail(request, book_id):
@@ -34,16 +30,25 @@ def book_detail(request, book_id):
     reviews = Review.objects.filter(book=book)
     user = request.user
     user_belongs_to_critics_group = user.groups.filter(name='Critics').exists() or user.is_superuser
-    print("user_belongs_to_critics_group:", user_belongs_to_critics_group)
     return render(request, 'book_detail.html',
                   {'user_belongs_to_critics_group': user_belongs_to_critics_group, 'book': book, 'reviews': reviews})
 
 
+def profile_dispatcher(request, username):
+    try:
+        return reader_profile(request, username)
+    except Reader.DoesNotExist:
+        try:
+            return critic_profile(request, username)
+        except Critic.DoesNotExist:
+            return HttpResponseNotFound('<h1>Страница не найдена</h1>')
+
+
 @login_required
 # @user_passes_test(lambda u: u.is_superuser or u.groups.filter(name='Readers').exists(), login_url='/not_access/')
-def reader_profile(request, user):
-    reader = Reader.objects.get(user__username=user)
-    if reader.user == request.user:
+def reader_profile(request, username):
+    reader = Reader.objects.get(user__username=username)
+    if reader.user == request.user or request.user.is_superuser:
         return render(request, 'reader_profile.html', {'reader': reader})
     else:
         return render(request, 'not_access.html')
@@ -52,7 +57,7 @@ def reader_profile(request, user):
 @login_required
 def critic_profile(request, username):
     critic = Critic.objects.get(user__username=username)
-    if critic.user == request.user:
+    if critic.user == request.user or request.user.is_superuser:
         return render(request, 'critic_profile.html', {'critic': critic})
     else:
         return render(request, 'not_access.html')
