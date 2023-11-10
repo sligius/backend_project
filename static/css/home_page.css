@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@200;300;400;500;600;700&display=swap');
-
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 * {
     font-family: "Comfortaa", sans-serif;
 }
@@ -32,9 +32,7 @@ img {
 }
 
 .book_container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    display: inline-block;
 }
 
 .book {
@@ -43,12 +41,11 @@ img {
     margin: 30px;
     font-family: "Comfortaa", sans-serif;
     position: relative;
-    max-width: 800px;
-    width: 100%;
     padding: 40px 30px;
-    flex-direction: column;
-    flex: 1;
-    align-self: stretch;
+}
+
+.webBody1 ul {
+    padding: 0;
 }
 
 .main_book_info p {
@@ -93,7 +90,6 @@ img {
 }
 
 .button-link {
-    margin-top: 15px;
     display: inline-block;
     padding: 10px 20px;
     background-color: #3c2d4b;
@@ -108,4 +104,36 @@ img {
 .button-link:hover {
     background-color: #e8d9ff;
     color: black;
+}
+
+.button-container {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.add-to-favorites-btn {
+    margin-left: 10px;
+    background: none;
+    border: none;
+    font-size: 13px;
+}
+
+.add-to-favorites-btn:hover {
+    margin-left: 10px;
+    background: none;
+    border: none;
+}
+
+.heart-icon:hover {
+    color: red;
+}
+
+.heart-icon-2 {
+    font-size: 13px;
+    opacity: 1;
+    background: none;
+    border: none;
+    color: rgba(255, 0, 0, 0.82);
 }

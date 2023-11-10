@@ -158,8 +158,27 @@ def home_page(request):
 
 def book_list(request):
     books = Book.objects.all()
-    context = {'books': books}
-    return render(request, 'book_list.html', context)
+    user_is_reader = request.user.groups.filter(name='Readers').exists()
+    if request.user.is_authenticated and user_is_reader:
+        if request.method == 'POST':
+            book_id = request.POST.get('book_id')
+            book = Book.objects.get(id=book_id)
+            reader, created = Reader.objects.get_or_create(user=request.user)
+            favorite, created = FavoriteBook.objects.get_or_create(reader=reader)
+            favorite.book.add(book)
+            return render(request, 'book_list.html', {'books': Book.objects.all()})
+
+        else:
+            for book in books:
+                book.is_favourite = is_book_in_favorites(book, request.user)
+            return render(request, 'book_list.html', {'books': books})
+    else:
+        return render(request, 'book_list.html', {'books': books,
+                                                  'user_is_reader': user_is_reader})
+
+
+def is_book_in_favorites(book, user):
+    return FavoriteBook.objects.filter(reader__user=user, book=book).exists()
 
 
 def logout_view(request):
