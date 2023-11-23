@@ -33,6 +33,15 @@
                         <p>{{ review.critic }}:</p>
                     </div>
                     <p>{{ review.content }}</p>
+
+                    {% if user.username == review.critic.user.username and user_belongs_to_critics_group %}
+                        <form method="post" class="delete-review-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="review_id" value="{{ review.id }}">
+                            <button type="submit" class="delete-review-btn"><i class="fa-times fa-1x fas"></i></button>
+                        </form>
+                    {% endif %}
+
                 </div>
             {% empty %}
                 <p>Рецензий пока нет.</p>
@@ -42,6 +51,19 @@
             <a href="{% url 'create_review' book.id %}" class="button-link">Создать рецензию</a>
         {% endif %}
     </div>
+    <script>
+    window.onload = function() {
+      var buttons = document.querySelectorAll('.delete-review-btn');
+      buttons.forEach(function(button) {
+        button.addEventListener('mouseover', function() {
+          this.closest('.quote').style.backgroundColor = 'rgba(222, 212, 225, 0.3)';
+        });
+        button.addEventListener('mouseout', function() {
+          this.closest('.quote').style.backgroundColor = '';
+        });
+      });
+    };
+    </script>
 {% endblock %}
 </body>
 </html>

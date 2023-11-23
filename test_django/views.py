@@ -41,8 +41,16 @@ def book_detail(request, book_id):
     reviews = Review.objects.filter(book=book)
     user = request.user
     user_belongs_to_critics_group = user.groups.filter(name='Critics').exists() or user.is_superuser
+    if request.method == 'POST':
+        review_id = request.POST.get('review_id')
+        review = Review.objects.get(id=review_id)
+        if review.critic.user == user and user_belongs_to_critics_group:
+            review.delete()
+            return redirect('book_detail', book_id=book_id)
+
     return render(request, 'book_detail.html',
-                  {'user_belongs_to_critics_group': user_belongs_to_critics_group, 'book': book, 'reviews': reviews})
+                  {'user': user, 'user_belongs_to_critics_group': user_belongs_to_critics_group,
+                   'book': book, 'reviews': reviews})
 
 
 def profile_dispatcher(request, username):

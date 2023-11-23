@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@200;300;400;500;600;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
 .book {
     background-color: #f8f1ff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -61,6 +63,8 @@
     font-style: italic;
     overflow: hidden;
     line-height: 20px;
+    position: relative;
+
 }
 
 .critic_name {
@@ -68,7 +72,7 @@
 }
 
 .button-link {
-    font-size: 12px;
+    font-size: 14px;
     display: inline-block;
     padding: 7px 15px;
     background-color: #e8d9ff;
@@ -87,4 +91,16 @@
     background-color: #e8d9ff;
     color: black;
     background-color: rgba(94, 56, 136, 0.36);
+}
+
+.delete-review-btn {
+    background: none;
+    border: none;
+    color: black;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 15px;
+    margin-top: 7px;
+    margin-right: 7px;
 }
