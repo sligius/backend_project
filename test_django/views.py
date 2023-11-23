@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
@@ -8,6 +8,12 @@ from .forms import ReviewForm
 
 
 def create_review(request, book_id):
+    """
+        Создание отзыва на книгу. Обрабатывается как GET, так и POST запросы.
+        При GET запросе отображается форма для создания отзыва.
+        При POST запросе проверяются данные формы и создается новый отзыв.
+        Доступно только для группы критиков.
+    """
     book = Book.objects.get(pk=book_id)
     if request.method == 'POST':
         form = ReviewForm(request.POST)
@@ -26,6 +32,11 @@ def create_review(request, book_id):
 
 
 def book_detail(request, book_id):
+    """
+        Отображение деталей книги, включая все отзывы на книгу.
+        Также проверяется, принадлежит ли текущий пользователь к группе критиков или является суперпользователем.
+        Если проверка пройдена, то предоставляется функция добавления отзыва к книге.
+    """
     book = Book.objects.get(pk=book_id)
     reviews = Review.objects.filter(book=book)
     user = request.user
@@ -35,6 +46,10 @@ def book_detail(request, book_id):
 
 
 def profile_dispatcher(request, username):
+    """
+        Действует как диспетчер, направляя запрос либо к методу reader_profile, либо к методу critic_profile.
+        Если ни Reader, ни Critic не существуют с указанным именем пользователя, возвращает ошибку 404.
+    """
     try:
         return reader_profile(request, username)
     except Reader.DoesNotExist:
@@ -45,8 +60,10 @@ def profile_dispatcher(request, username):
 
 
 @login_required
-# @user_passes_test(lambda u: u.is_superuser or u.groups.filter(name='Readers').exists(), login_url='/not_access/')
 def reader_profile(request, username):
+    """
+        Отображение профиля читателя. Доступ к этому представлению имеют только сам читатель или суперпользователь.
+    """
     reader = Reader.objects.get(user__username=username)
     if reader.user == request.user or request.user.is_superuser:
         return render(request, 'reader_profile.html', {'reader': reader})
@@ -56,6 +73,9 @@ def reader_profile(request, username):
 
 @login_required
 def critic_profile(request, username):
+    """
+        Отображение профиля критика. Доступ к этому представлению имеют только сам критик или суперпользователь.
+    """
     critic = Critic.objects.get(user__username=username)
     if critic.user == request.user or request.user.is_superuser:
         return render(request, 'critic_profile.html', {'critic': critic})
@@ -64,6 +84,10 @@ def critic_profile(request, username):
 
 
 def favourite_books(request, user):
+    """
+        Отображение списка любимых книг конкретного читателя.
+        Также обрабатываются POST-запросы для удаления книги из избранного.
+    """
     user_object = User.objects.get(username=user)
     reader = Reader.objects.get(user_id=user_object.id)
     favourite_books = FavoriteBook.objects.filter(reader=reader)
@@ -80,6 +104,12 @@ def favourite_books(request, user):
 
 
 def show_index(request):
+    """
+        Отображение главной страницы. Если пользователь аутентифицирован, ппроисходит перенаправление
+        на домашнюю страницу.
+        Также обрабатываются POST-запросы для создания нового пользователя или входа в систему
+        существующего пользователя.
+    """
     if request.user.is_authenticated:
         return redirect('home/')
     else:
@@ -113,33 +143,14 @@ def show_index(request):
                 except:
                     return redirect('login')
 
-    # return render(request, 'index.html')
-
-
-'''
-@login_required
-def edit_profile(request):
-    if request.method == 'POST':
-        
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-
-        try:
-            reader = Reader.objects.get(user=request.user)
-            reader.first_name = first_name
-            reader.last_name = last_name
-            reader.save()
-
-            return HttpResponse('Профиль успешно обновлен')
-        except Reader.DoesNotExist:
-            return HttpResponse('Профиль не найден')
-    else:
-        return HttpResponse('Метод не поддерживается')
-'''
-
 
 @login_required
 def edit_profile(request, user):
+    """
+        Редактирование профиля читателя. Обрабатываются как GET, так и POST запросы.
+        При GET запросе отображается форма для редактирования профиля.
+        При POST запросе проверяются данные формы и обновляется профиль читателя.
+    """
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
@@ -158,10 +169,17 @@ def edit_profile(request, user):
 
 
 def home_page(request):
+    """
+        Отображение домашней страницы.
+    """
     return render(request, 'home_page.html')
 
 
 def book_list(request):
+    """
+        Отображение списка всех книг. Если пользователь аутентифицирован и является читателем,
+        также есть возможность добавлять или удалять книги из избранного.
+    """
     books = Book.objects.all()
     user_is_reader = request.user.groups.filter(name='Readers').exists()
     print(user_is_reader)
@@ -188,19 +206,31 @@ def book_list(request):
 
 
 def is_book_in_favorites(book, user):
+    """
+        Проверка, находится ли книга в избранном у пользователя.
+    """
     return FavoriteBook.objects.filter(reader__user=user, book=book).exists()
 
 
 def logout_view(request):
+    """
+        Выход из системы пользователя и перенаправление его на страницу входа.
+    """
     logout(request)
     return redirect('login')
 
 
 def access_denied(request):
+    """
+        Отображение страницы, информирующей пользователя о том, что у него нет доступа к запрашиваемому ресурсу.
+    """
     return render(request, 'not_access.html')
 
 
 def incorrect_login(request):
+    """
+        Отображение страницы, информирующей пользователя о том, что его попытка входа в систему была неудачной.
+    """
     return render(request, 'login_error.html')
 
-# Create your views here.
+
