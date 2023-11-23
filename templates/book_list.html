@@ -13,47 +13,43 @@
 <body>
 {% block content %}
 
-    <div class="webBody1">
-        <ul>
-            <div class="book_container">
-                {% for book in books %}
-                    <div class="book">
+<div class="webBody1">
+    <ul>
+        <div class="book_container">
+            {% for book in books %}
+            <div class="book">
 
-                        <div class="main_book_info">
-                            <h3>{{ book.title }}</h3>
-                            <p>{% for author in book.author.all %}{{ author.name }}{% if not forloop.last %},
-                            {% endif %}{% endfor %}</p>
-                        </div>
+                <div class="main_book_info">
+                    <h3>{{ book.title }}</h3>
+                    <p>{% for author in book.author.all %}{{ author.name }}{% if not forloop.last %},
+                    {% endif %}{% endfor %}</p>
+                </div>
 
-                        <p data-before="Год публикации:">{{ book.publication_year }}</p>
-                        <p data-before="Описание:"> {{ book.description }}</p>
-                        <p data-before="Жанры:">
-                            {% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %},
-                            {% endif %}{% endfor %}</p>
-                        <div class="button-container">
-                            <a href="{% url 'book_detail' book_id=book.id %}" class="button-link">Подробнее</a>
+                <p data-before="Год публикации:">{{ book.publication_year }}</p>
+                <p data-before="Описание:"> {{ book.description }}</p>
+                <p data-before="Жанры:">
+                    {% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %},
+                    {% endif %}{% endfor %}</p>
+                <div class="button-container">
+                    <a href="{% url 'book_detail' book_id=book.id %}" class="button-link">Подробнее</a>
 
-                            {% if user_is_reader %}
-                                <form method="post">
-                                    {% csrf_token %}
-                                    {% if book.is_favourite %}
-                                        <button type="button" disabled class="heart-icon-2">
-                                            <i class="fas fa-heart fa-3x"></i>
-                                        </button>
-                                    {% else %}
-                                        <input type="hidden" name="book_id" value="{{ book.id }}">
-                                        <button type="submit" class="add-to-favorites-btn">
-                                            <i class="far fa-heart fa-3x heart-icon"></i>
-                                        </button>
-                                    {% endif %}
-                                </form>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endfor %}
+                    {% if user_is_reader %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="book_id" value="{{ book.id }}">
+                            <button type="submit"
+                                    class="{% if book.is_favourite %}heart-icon-2{% else %}add-to-favorites-btn{% endif %}">
+                                <i class="fa-heart fa-3x {% if book.is_favourite %}fas{% else %}far heart-icon{% endif %}"></i>
+                            </button>
+                        </form>
+
+                    {% endif %}
+                </div>
             </div>
-        </ul>
-    </div>
+            {% endfor %}
+        </div>
+    </ul>
+</div>
 {% endblock %}
 </body>
 </html>

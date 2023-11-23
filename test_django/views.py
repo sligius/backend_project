@@ -69,6 +69,11 @@ def favourite_books(request, user):
     favourite_books = FavoriteBook.objects.filter(reader=reader)
     current_user = request.user
     if current_user.is_authenticated:
+        if request.method == 'POST':
+            book_id = request.POST.get('book_id')
+            book = Book.objects.get(id=book_id)
+            favourite_book = FavoriteBook.objects.get(reader=reader)
+            favourite_book.book.remove(book)
         return render(request, 'favourite_books.html', {'favourite_books': favourite_books})
     else:
         return render(request, 'not_access.html')
@@ -146,7 +151,7 @@ def edit_profile(request, user):
         reader.date_of_birth = date_of_birth
         reader.save()
 
-        return redirect('reader_profile', user=request.user.username)
+        return redirect('profile_dispatcher', username=request.user.username)
 
     reader = Reader.objects.get(user__username=user)
     return render(request, 'edit_profile.html', {'reader': reader})
@@ -166,7 +171,10 @@ def book_list(request):
             book = Book.objects.get(id=book_id)
             reader, created = Reader.objects.get_or_create(user=request.user)
             favorite, created = FavoriteBook.objects.get_or_create(reader=reader)
-            favorite.book.add(book)
+            if is_book_in_favorites(book, request.user):
+                favorite.book.remove(book)
+            else:
+                favorite.book.add(book)
             return render(request, 'book_list.html', {'books': Book.objects.all(),
                                                       'user_is_reader': user_is_reader})
 

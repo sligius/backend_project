@@ -31,6 +31,12 @@
                                     {% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %},
                                     {% endif %}{% endfor %}</p>
                                 <a href="{% url 'book_detail' book_id=book.id %}" class="button-link">Подробнее</a>
+                                <form method="post" class="delete-book-form">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="book_id" value="{{ book.id }}">
+                                    <button type="submit" class="delete-book-btn"><i class="fa-times fa-1x fas"></i>
+                                    </button>
+                                </form>
                             </div>
                         {% empty %}
                             <p>No favorite books found.</p>
