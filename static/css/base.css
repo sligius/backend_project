@@ -17,7 +17,7 @@
     position: relative;
     z-index: 999;
     display: flex;
-    justify-content: flex-start; /* Используем flex-start для выравнивания элементов в начале */
+    justify-content: flex-start;
 }
 
 #menu-bar-template li {

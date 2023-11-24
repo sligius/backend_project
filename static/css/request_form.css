@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@200;300;400;500;600;700&display=swap');
+
+span.asteriskField {
+    display: none;
+}
+
+#box {
+    height: 100vh;
+}
+
+#myForm {
+    font-family: "Comfortaa", sans-serif;
+    width: 70%;
+    background-color: #f8f1ff;
+    border-radius: 20px;
+}
+
+form input[type="submit"] {
+    background-color: #e7c9ff;
+    border: 2px solid rgba(0, 0, 0, 0.17);
+    color: black;
+}
+
+form input[type="submit"] {
+    background-color: #e7c9ff;
+    border: 2px solid rgba(0, 0, 0, 0.17);
+    color: black;
+}
+
+form input[type="submit"]:hover {
+    background-color: #e1adff;
+}

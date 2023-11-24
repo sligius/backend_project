@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Request</title>
+    {% load crispy_forms_tags %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% load static %}
+    <meta charset="UTF-8">
+    {% block additional_css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/request_form.css' %}">
+    {% endblock %}
+
+</head>
+<body>
+{% block content %}
+    <div id="box" class="d-flex justify-content-center align-items-center">
+        <div id="myForm" class=" p-5">
+            <h2 class="form-name mb-5 text-center">Заявка на добавление автора/книги</h2>
+            <form method="post">
+                {% csrf_token %}
+                {% crispy form %}
+            </form>
+        </div>
+    </div>
+    <script>
+        // JS для отображения и скрытия полей
+        document.getElementById("id_request_type").addEventListener("change", function () {
+            var authorField = document.getElementById("id_author_name").parentElement;
+            var bookField = document.getElementById("id_book_title").parentElement;
+            if (this.value === "A") {
+                authorField.style.display = "block";
+                bookField.style.display = "none";
+            } else {
+                authorField.style.display = "block";
+                bookField.style.display = "block";
+            }
+        });
+    </script>
+{% endblock %}
+</body>
+</html>

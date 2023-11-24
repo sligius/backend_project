@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, Group
 from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
 from .models import Book, FavoriteBook, Reader, Review, Critic
-from .forms import ReviewForm
+from .forms import ReviewForm, RequestForm
 
 
 def create_review(request, book_id):
@@ -242,4 +242,15 @@ def incorrect_login(request):
     """
     return render(request, 'login_error.html')
 
+
+def request_form(request):
+    if request.method == 'POST':
+        form = RequestForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'home_page.html')
+    else:
+        form = RequestForm()
+
+    return render(request, 'request_form.html', {'form': form})
 

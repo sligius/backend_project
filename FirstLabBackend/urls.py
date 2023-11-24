@@ -31,4 +31,5 @@ urlpatterns = [
     path('edit_profile/<str:user>/', views.edit_profile, name='edit_profile'),
     path('not_access/', views.access_denied, name='not_access'),
     path('incorrect_login/', views.incorrect_login, name='login_error'),
+    path('request/', views.request_form, name='request_form'),
 ]
