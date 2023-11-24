@@ -115,3 +115,20 @@ class FavoriteBook(models.Model):
 
     class Meta:
         db_table = 'Favourite Book'
+
+
+class UserRequest(models.Model):
+    REQUEST_TYPES = (
+        ('A', 'Автор'),
+        ('B', 'Книга'),
+    )
+
+    request_type = models.CharField(max_length=1, choices=REQUEST_TYPES, verbose_name='Тип заявки')
+    author_name = models.CharField(max_length=100, null=False, blank=False, verbose_name='Имя автора')
+    book_title = models.CharField(max_length=100, null=True, blank=True, verbose_name='Название книги')
+
+    def __str__(self):
+        return f'{self.get_request_type_display()} - {self.author_name} - {self.book_title if self.book_title else ""}'
+
+    class Meta:
+        db_table = 'User Request'
