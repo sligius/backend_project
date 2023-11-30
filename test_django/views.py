@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, JsonResponse
 from django.shortcuts import render, redirect
 from .models import Book, FavoriteBook, Reader, Review, Critic
 from .forms import ReviewForm, RequestForm
@@ -114,7 +114,7 @@ def favourite_books(request, user):
 
 def show_index(request):
     """
-        Отображение главной страницы. Если пользователь аутентифицирован, ппроисходит перенаправление
+        Отображение главной страницы. Если пользователь аутентифицирован, происходит перенаправление
         на домашнюю страницу.
         Также обрабатываются POST-запросы для создания нового пользователя или входа в систему
         существующего пользователя.
@@ -151,6 +151,17 @@ def show_index(request):
                     return redirect('home/')
                 except:
                     return redirect('login')
+
+
+def validate_username(request):
+    """
+        Проверка доступности логина
+    """
+    username = request.GET.get('username', None)
+    response = {
+        'is_taken': User.objects.filter(username__iexact=username).exists()
+    }
+    return JsonResponse(response)
 
 
 @login_required
@@ -244,6 +255,13 @@ def incorrect_login(request):
 
 
 def request_form(request):
+    """
+        Создание заявки на добавление автора/книги на сайт.
+        Обрабатывается как GET, так и POST запросы.
+        При GET запросе отображается форма для создания заявки.
+        При POST запросе проверяются данные формы и создается новая заявка.
+        Доступно для всех пользователей.
+    """
     if request.method == 'POST':
         form = RequestForm(request.POST)
         if form.is_valid():
@@ -253,4 +271,3 @@ def request_form(request):
         form = RequestForm()
 
     return render(request, 'request_form.html', {'form': form})
-

@@ -127,11 +127,10 @@ body{
   margin-top: 30px;
 }
 .forms .form-content .input-box{
-  display: flex;
   align-items: center;
   height: 50px;
   width: 100%;
-  margin: 10px 0;
+  margin: 20px 0;
   position: relative;
 }
 .form-content .input-box input{
@@ -195,6 +194,29 @@ body{
 .container #flip{
   display: none;
 }
+
+#usernameError {
+  margin-top: 3px;
+  text-align: center;
+  color: #c20000;
+}
+
+.forms .form-content .button input.button-disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
 @media (max-width: 730px) {
   .container .cover{
     display: none;

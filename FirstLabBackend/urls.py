@@ -32,4 +32,5 @@ urlpatterns = [
     path('not_access/', views.access_denied, name='not_access'),
     path('incorrect_login/', views.incorrect_login, name='login_error'),
     path('request/', views.request_form, name='request_form'),
+    path('validate_username', views.validate_username, name='validate_username')
 ]

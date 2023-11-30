@@ -30,11 +30,13 @@
                     <div class="input-boxes">
                         <div class="input-box">
                             <i class="fas fa-envelope"></i>
-                            <input type="text" name="username" placeholder="Логин" required>
+                            <input type="text" id="username" name="username" placeholder="Логин" required>
+                            <label for="username" class="visually-hidden">Логин</label>
                         </div>
                         <div class="input-box">
                             <i class="fas fa-lock"></i>
-                            <input type="password" name="password" placeholder="Пароль" required>
+                            <input type="password" id="password" name="password" placeholder="Пароль" required>
+                            <label for="password" class="visually-hidden">Пароль</label>
                         </div>
                         <div class="button input-box">
                             <input type="submit" name="login_submit" value="Войти">
@@ -42,6 +44,7 @@
                         <div class="text sign-up-text">Ещё нет аккаунта? <label for="flip"><br>Зарегистрируйтесь прямо
                             сейчас!</label></div>
                     </div>
+
                 </form>
             </div>
             <div class="signup-form">
@@ -49,17 +52,21 @@
                 <form method="post">
                     {% csrf_token %}
                     <div class="input-boxes">
-                        <div class="input-box">
+                        <div class="input-box" id="id_username_box">
                             <i class="fas fa-user"></i>
-                            <input type="text" name="create_username" placeholder="Логин" required>
+                            <input type="text" id="id_username" name="create_username" placeholder="Логин" required>
+                            <label for="id_username" class="visually-hidden">Логин</label>
                         </div>
                         <div class="input-box">
                             <i class="fas fa-envelope"></i>
-                            <input type="email" name="email" placeholder="Почта" required>
+                            <input type="email" id="email" name="email" placeholder="Почта" required>
+                            <label for="email" class="visually-hidden">Почта</label>
                         </div>
                         <div class="input-box">
                             <i class="fas fa-lock"></i>
-                            <input type="password" name="create_password" placeholder="Пароль" required>
+                            <input type="password" id="create_password" name="create_password" placeholder="Пароль"
+                                   required>
+                            <label for="create_password" class="visually-hidden">Пароль</label>
                         </div>
                         <div class="button input-box">
                             <input type="submit" name="signup_submit" value="Зарегистрироваться">
@@ -67,10 +74,42 @@
                         <div class="text sign-up-text">Уже есть аккаунт? <label for="flip"><br>Просто войдите!</label>
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#id_username').on('keyup', function () {
+            $.ajax({
+                data: {'username': $(this).val()},
+                url: "{% url 'validate_username' %}",
+                success: function (response) {
+                    if (response.is_taken === true) {
+                        $('#id_username').removeClass('is-valid').addClass('is-invalid');
+                        $('#usernameError').remove(); // удаляем старое сообщение об ошибке
+                        $('#id_username').after('<div class="invalid-feedback d-block" ' +
+                            'id="usernameError">Такой логин уже занят</div>');
+                        $('input[name="signup_submit"]').prop('disabled', true).addClass('button-disabled');
+                    } else {
+                        $('#id_username').removeClass('is-invalid').addClass('is-valid');
+                        $('#usernameError').remove();
+                        $('input[name="signup_submit"]').prop('disabled', false).removeClass('button-disabled'); // включаем кнопку регистрации
+                    }
+                },
+                error: function (response) {
+                    console.log(response.responseJSON.errors)
+                }
+            });
+            return false;
+        });
+    })
+</script>
 </body>
 </html>
