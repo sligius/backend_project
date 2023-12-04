@@ -127,10 +127,6 @@ img {
     border: none;
 }
 
-.heart-icon:hover {
-    color: red;
-}
-
 .heart-icon-2 {
     font-size: 13px;
     opacity: 1;
@@ -139,3 +135,24 @@ img {
     color: rgba(255, 0, 0, 0.82);
 }
 
+.fas {
+    color: rgba(255, 0, 0, 0.82);
+}
+
+.far {
+    color: black;
+}
+
+.fa-heart.fa-3x.far:hover,
+.fa-heart.fa-3x.heart-icon.far:hover {
+    color: rgba(255, 0, 0, 0.82);
+}
+
+.fa-heart.fa-3x.fas:hover,
+.fa-heart.fa-3x.heart-icon.fas:hover {
+    color: black;
+}
+
+button:hover {
+    cursor: pointer;
+}

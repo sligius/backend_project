@@ -13,43 +13,80 @@
 <body>
 {% block content %}
 
-<div class="webBody1">
-    <ul>
-        <div class="book_container">
-            {% for book in books %}
-            <div class="book">
+    <div class="webBody1">
+        <ul>
+            <div class="book_container">
+                {% for book in books %}
+                    <div class="book">
 
-                <div class="main_book_info">
-                    <h3>{{ book.title }}</h3>
-                    <p>{% for author in book.author.all %}{{ author.name }}{% if not forloop.last %},
-                    {% endif %}{% endfor %}</p>
-                </div>
+                        <div class="main_book_info">
+                            <h3>{{ book.title }}</h3>
+                            <p>{% for author in book.author.all %}{{ author.name }}{% if not forloop.last %},
+                            {% endif %}{% endfor %}</p>
+                        </div>
 
-                <p data-before="Год публикации:">{{ book.publication_year }}</p>
-                <p data-before="Описание:"> {{ book.description }}</p>
-                <p data-before="Жанры:">
-                    {% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %},
-                    {% endif %}{% endfor %}</p>
-                <div class="button-container">
-                    <a href="{% url 'book_detail' book_id=book.id %}" class="button-link">Подробнее</a>
+                        <p data-before="Год публикации:">{{ book.publication_year }}</p>
+                        <p data-before="Описание:"> {{ book.description }}</p>
+                        <p data-before="Жанры:">
+                            {% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %},
+                            {% endif %}{% endfor %}</p>
+                        <div class="button-container">
+                            <a href="{% url 'book_detail' book_id=book.id %}" class="button-link">Подробнее</a>
 
-                    {% if user_is_reader %}
-                        <form method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="book_id" value="{{ book.id }}">
-                            <button type="submit"
-                                    class="{% if book.is_favourite %}heart-icon-2{% else %}add-to-favorites-btn{% endif %}">
-                                <i class="fa-heart fa-3x {% if book.is_favourite %}fas{% else %}far heart-icon{% endif %}"></i>
-                            </button>
-                        </form>
+                            {% if user_is_reader %}
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="book_id" value="{{ book.id }}">
+                                    <button type="submit"
+                                            class="{% if book.is_favourite %}heart-icon-2{% else %}add-to-favorites-btn{% endif %}">
+                                        <i class="fa-heart fa-3x {% if book.is_favourite %}fas{% else %}far heart-icon{% endif %}"></i>
+                                    </button>
+                                </form>
 
-                    {% endif %}
-                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
-    </ul>
-</div>
+        </ul>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function () {
+            $('form').on('submit', function () {
+                var form = $(this);
+                var bookId = form.find('input[name="book_id"]').val();
+                var csrftoken = form.find('input[name="csrfmiddlewaretoken"]').val();
+
+                $.ajax({
+                    type: 'POST',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    },
+                    data: {'book_id': bookId},
+                    url: "{% url 'update_heart_icon' %}",
+                    success: function (response) {
+                        var heartIcon = form.find('.fa-heart');
+                        if (response.is_favorite) {
+                            heartIcon.removeClass('far').addClass('fas');
+                        } else {
+                            heartIcon.removeClass('fas').addClass('far');
+                        }
+                    },
+                    error: function (response) {
+                        if (response.responseJSON) {
+                            console.log(response.responseJSON.errors);
+                        } else {
+                            console.log('An error occurred, but no additional information was provided.');
+                        }
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
 {% endblock %}
 </body>
 </html>

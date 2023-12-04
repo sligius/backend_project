@@ -232,6 +232,23 @@ def is_book_in_favorites(book, user):
     return FavoriteBook.objects.filter(reader__user=user, book=book).exists()
 
 
+def update_heart_icon(request):
+    if request.method == 'POST':
+        book_id = request.POST.get('book_id')
+        book = Book.objects.get(id=book_id)
+        reader, created = Reader.objects.get_or_create(user=request.user)
+        favorite, created = FavoriteBook.objects.get_or_create(reader=reader)
+
+        if is_book_in_favorites(book, request.user):
+            favorite.book.remove(book)
+            is_favorite = False
+        else:
+            favorite.book.add(book)
+            is_favorite = True
+
+        return JsonResponse({'is_favorite': is_favorite})
+
+
 def logout_view(request):
     """
         Выход из системы пользователя и перенаправление его на страницу входа.
