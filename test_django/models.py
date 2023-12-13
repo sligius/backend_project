@@ -92,7 +92,7 @@ class Book(models.Model):
 
 
 class Review(models.Model):
-    critic = models.ForeignKey(Critic, on_delete=models.CASCADE, verbose_name='Критик',help_text="Выберите критика",
+    critic = models.ForeignKey(Critic, on_delete=models.CASCADE, verbose_name='Критик', help_text="Выберите критика",
                                null=False, blank=False)
     book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name='Книга', help_text="Выберите книгу",
                              null=False, blank=False)

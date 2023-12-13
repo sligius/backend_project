@@ -52,17 +52,17 @@
         {% endif %}
     </div>
     <script>
-    window.onload = function() {
-      var buttons = document.querySelectorAll('.delete-review-btn');
-      buttons.forEach(function(button) {
-        button.addEventListener('mouseover', function() {
-          this.closest('.quote').style.backgroundColor = 'rgba(222, 212, 225, 0.3)';
-        });
-        button.addEventListener('mouseout', function() {
-          this.closest('.quote').style.backgroundColor = '';
-        });
-      });
-    };
+        window.onload = function () {
+            var buttons = document.querySelectorAll('.delete-review-btn');
+            buttons.forEach(function (button) {
+                button.addEventListener('mouseover', function () {
+                    this.closest('.quote').style.backgroundColor = 'rgba(222, 212, 225, 0.3)';
+                });
+                button.addEventListener('mouseout', function () {
+                    this.closest('.quote').style.backgroundColor = '';
+                });
+            });
+        };
     </script>
 {% endblock %}
 </body>

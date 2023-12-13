@@ -74,7 +74,6 @@
                         <div class="text sign-up-text">Уже есть аккаунт? <label for="flip"><br>Просто войдите!</label>
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>
@@ -87,8 +86,13 @@
 <script>
     $(document).ready(function () {
         $('#id_username').on('keyup', function () {
+            var csrftoken = $('[name=csrfmiddlewaretoken]').val();
             $.ajax({
-                data: {'username': $(this).val()},
+                headers: {'X-CSRFToken': csrftoken},
+                data: {
+                    'username': $(this).val(),
+                    'csrfmiddlewaretoken': csrftoken
+                },
                 url: "{% url 'validate_username' %}",
                 success: function (response) {
                     if (response.is_taken === true) {

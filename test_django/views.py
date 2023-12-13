@@ -233,6 +233,9 @@ def is_book_in_favorites(book, user):
 
 
 def update_heart_icon(request):
+    """
+        Функция для корректной смены иконок любимых книг (для аякса)
+    """
     if request.method == 'POST':
         book_id = request.POST.get('book_id')
         book = Book.objects.get(id=book_id)

@@ -25,7 +25,8 @@
 
                 <div>
                     <label for="id_date_of_birth">Дата рождения:</label>
-                    <input type="date" id="id_date_of_birth" name="date_of_birth" value="{{ reader.date_of_birth|default_if_none:'' }}">
+                    <input type="date" id="id_date_of_birth" name="date_of_birth"
+                           value="{{ reader.date_of_birth|default_if_none:'' }}">
                 </div>
 
                 <div class="button-container">

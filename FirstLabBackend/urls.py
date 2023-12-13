@@ -33,5 +33,5 @@ urlpatterns = [
     path('incorrect_login/', views.incorrect_login, name='login_error'),
     path('request/', views.request_form, name='request_form'),
     path('validate_username', views.validate_username, name='validate_username'),
-path('update_heart_icon/', views.update_heart_icon, name='update_heart_icon'),
+    path('update_heart_icon/', views.update_heart_icon, name='update_heart_icon'),
 ]

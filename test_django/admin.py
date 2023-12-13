@@ -10,4 +10,3 @@ admin.site.register(FavoriteBook)
 admin.site.register(Review)
 admin.site.register(Critic)
 admin.site.register(UserRequest)
-
